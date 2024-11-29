@@ -104,6 +104,23 @@ class TreeRetrieverConfig:
 
 
 class TreeRetriever(BaseRetriever):
+    """
+    TreeRetriever 클래스는 BaseRetriever 클래스를 상속받아 구성됩니다.
+
+    초기화 메서드 (__init__)는 다음과 같은 매개변수를 받습니다:
+    - config: 설정 객체로, num_layers와 start_layer 속성을 포함합니다.
+    - tree: Tree 클래스의 인스턴스여야 합니다.
+
+    초기화 메서드는 다음과 같은 검사를 수행합니다:
+    1. tree가 Tree 클래스의 인스턴스인지 확인합니다. 그렇지 않으면 ValueError를 발생시킵니다.
+    2. config.num_layers가 tree.num_layers + 1보다 큰 경우 ValueError를 발생시킵니다.
+    3. config.start_layer가 tree.num_layers보다 큰 경우 ValueError를 발생시킵니다.
+
+    이후, tree, num_layers, start_layer 속성을 초기화합니다.
+    num_layers는 config.num_layers가 None이 아닌 경우 해당 값을 사용하고, 
+    그렇지 않으면 tree.num_layers + 1 값을 사용합니다.
+    start_layer는 config.start_layer 값을 사용합니다.
+    """
 
     def __init__(self, config, tree) -> None:
         if not isinstance(tree, Tree):
